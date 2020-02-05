@@ -1,0 +1,16 @@
+{% if alerts -%}
+*{{ alerts.length }} alert{% if alerts.length > 1 %}s{% endif %} received*
+{%- for alert in alerts %}
+
+{% if alert.status === 'firing' %}🔥{% else %}✅{% endif %}*{{ alert.status | upper }}*{% if alert.status === 'firing' %}🔥{% else %}✅{% endif %}
+
+{% for label, value in alert.labels -%}
+*{{ label }}*: {{ value }}
+{% endfor %}
+{% for annotation, value in alert.annotations -%}
+*{{ annotation }}*: {{ value }}
+{% endfor %}
+*Since:* {{ alert.startsAt | localdate }}
+{% if alert.status !== 'firing' %}*Ended:* {{ alert.endsAt | localdate }}{% endif %}
+{%- endfor %}
+{% endif %}
