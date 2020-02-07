@@ -1,8 +1,8 @@
 {% if alerts -%}
-*{{ alerts.length }} alert{% if alerts.length > 1 %}s{% endif %} received*
+*{{ alerts.length }} alert{{ 's' if alerts.length > 1 }} received*
 {%- for alert in alerts %}
 
-{% if alert.status === 'firing' %}🔥{% else %}✅{% endif %}*{{ alert.status | upper }}*{% if alert.status === 'firing' %}🔥{% else %}✅{% endif %}
+{{ '🔥' if alert.status === 'firing' else '✅' }} *{{ alert.status | upper }}* {{ '🔥' if alert.status === 'firing' else '✅' }}
 
 {% for label, value in alert.labels -%}
 *{{ label }}*: {{ value }}
